@@ -19,6 +19,7 @@ jar {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 sourceCompatibility = 1.8
@@ -32,4 +33,5 @@ dependencies {
     compile ('mysql:mysql-connector-java')
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile ("org.mockito:mockito-core:1.+")
 }
