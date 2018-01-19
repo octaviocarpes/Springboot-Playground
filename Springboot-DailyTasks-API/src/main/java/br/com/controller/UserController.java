@@ -3,6 +3,7 @@ package br.com.controller;
 
 import br.com.entity.User;
 import br.com.entity.UserResponse;
+import br.com.entity.binder.UserBinder;
 import br.com.entity.contract.UserContractRequest;
 import br.com.exceptions.ParseTimeException;
 import br.com.service.UserService;
@@ -52,8 +53,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
         }
 
-//        userService.createUser()
-        return null;
+        userService.createUser(UserBinder.bindUserContractModel(userContractRequest));
+        List<UserResponse> successList = new ArrayList<>();
+        UserResponse userResponse = new UserResponse();
+        userResponse.setMessage("User Registered!");
+        successList.add(userResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(successList);
     }
 
     @RequestMapping(

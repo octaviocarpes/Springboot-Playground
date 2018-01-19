@@ -1,8 +1,5 @@
 package br.com.entity;
 
-import javax.persistence.Entity;
-
-@Entity
 public class User {
     private String firstName;
     private String lastName;
@@ -18,6 +15,9 @@ public class User {
         this.password = password;
         this.email = email;
         this.userId = userId;
+    }
+
+    public User() {
     }
 
     public String getFirstName() {

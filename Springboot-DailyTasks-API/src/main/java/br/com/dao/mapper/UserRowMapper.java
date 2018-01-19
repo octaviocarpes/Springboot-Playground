@@ -13,7 +13,7 @@ public class UserRowMapper implements RowMapper {
         String db_username = resultSet.getString("username");
         String db_password = resultSet.getString("password");
         String db_email = resultSet.getString("email");
-        String db_id = resultSet.getString("userId");
+        String db_id = resultSet.getString("user_id");
         String db_firstName = resultSet.getString("firstName");
         String db_lastName = resultSet.getString("lastName");
 
