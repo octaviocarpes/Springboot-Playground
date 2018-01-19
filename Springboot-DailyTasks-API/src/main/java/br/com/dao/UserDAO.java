@@ -60,7 +60,7 @@ public class UserDAO {
 
     @Transactional(readOnly = true)
     public List<User> getAllUsers(){
-        return jdbcTemplate.query("SELECT * FROM Users",new UserRowMapper());
+        return jdbcTemplate.query("SELECT * FROM users",new UserRowMapper());
     }
 
     public void insertUser(User user){
