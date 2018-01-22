@@ -26,3 +26,10 @@ In this project i made a Daily Tasks API with Springboot and Java. In this direc
        values(1,'Octavio', 'Carpes', 'octavio.carpes@ilegra.com', 'octaviocarpes', 'superpassword');
     </li>
 </ul>    
+
+### Useful Links:
+<ul>
+   <li>
+       <a>https://github.com/aboullaite/spring-boot-jwt</a>
+    </li>
+</ul>
