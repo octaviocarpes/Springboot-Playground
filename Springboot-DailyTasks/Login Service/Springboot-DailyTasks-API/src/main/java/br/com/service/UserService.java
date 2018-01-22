@@ -14,10 +14,6 @@ public class UserService {
     @Autowired
     UserDAO userDAO;
 
-    public User getUser(String username, String password){
-        return userDAO.getUser(username,password);
-    }
-
     public List<User> getAllUsers(){
         return userDAO.getAllUsers();
     }
@@ -26,4 +22,7 @@ public class UserService {
          userDAO.insertUser(user);
     }
 
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
 }

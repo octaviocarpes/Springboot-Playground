@@ -25,11 +25,34 @@ public class UserDAO {
     private final String JDBC_USER = "root";
     private final String JDBC_PASSWORD = "senha";
 
-    @Transactional(readOnly = true)
-    public User getUser(String username, String password){
 
+    @Transactional(readOnly = true)
+    public List<User> getAllUsers(){
+        return jdbcTemplate.query("SELECT * FROM users",new UserRowMapper());
+    }
+
+    public void insertUser(User user){
+        Map<String, Object> parameters = new HashMap<String,Object>();
+        parameters.put("username",user.getUsername());
+        parameters.put("password",user.getPassword());
+        parameters.put("firstName",user.getFirstName());
+        parameters.put("lastName",user.getLastName());
+        parameters.put("email",user.getEmail());
+        parameters.put("user_id",user.getUserId());
+
+        jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("Users");
+
+        ArrayList<String> keys = new ArrayList<>(parameters.keySet());
+
+        jdbcInsert.setColumnNames(keys);
+        jdbcInsert.execute(parameters);
+
+    }
+
+    @Transactional(readOnly = true)
+    public User findByEmail(String email){
         PreparedStatement preparedStatement = null;
-        String sql = "SELECT * FROM Users WHERE username = "+ username + " AND password = " + password + ";";
+        String sql = "SELECT * FROM Users WHERE email = "+ email + ";";
 
         try {
             Connection connection = DriverManager.getConnection(JDBC_CONNECTION,JDBC_USER,JDBC_PASSWORD);
@@ -56,29 +79,6 @@ public class UserDAO {
         }
 
         return null;
-    }
-
-    @Transactional(readOnly = true)
-    public List<User> getAllUsers(){
-        return jdbcTemplate.query("SELECT * FROM users",new UserRowMapper());
-    }
-
-    public void insertUser(User user){
-        Map<String, Object> parameters = new HashMap<String,Object>();
-        parameters.put("username",user.getUsername());
-        parameters.put("password",user.getPassword());
-        parameters.put("firstName",user.getFirstName());
-        parameters.put("lastName",user.getLastName());
-        parameters.put("email",user.getEmail());
-        parameters.put("user_id",user.getUserId());
-
-        jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("Users");
-
-        ArrayList<String> keys = new ArrayList<>(parameters.keySet());
-
-        jdbcInsert.setColumnNames(keys);
-        jdbcInsert.execute(parameters);
-
     }
 
 }
