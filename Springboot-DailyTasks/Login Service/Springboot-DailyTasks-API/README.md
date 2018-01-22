@@ -1,4 +1,4 @@
-# Springboot Daily Tasks API
+# Springboot Daily Tasks API - Login Service
 In this project i made a Daily Tasks API with Springboot and Java. In this directory is the Login Service.
 
 ## Resources:
