@@ -2,27 +2,18 @@ package br.com.controller;
 
 
 import br.com.entity.User;
-import br.com.entity.UserResponse;
-import br.com.entity.binder.UserBinder;
-import br.com.entity.contract.UserContractRequest;
-import br.com.exceptions.ParseTimeException;
+
 import br.com.service.UserService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.hibernate.exception.DataException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
-import java.util.Date;
-import javax.servlet.ServletException;
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,35 +24,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @RequestMapping(
-            value = "createUser",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<List<UserResponse>> createUser(
-            @RequestBody
-            @Valid
-            UserContractRequest userContractRequest,
-            BindingResult bindingResult
-    ) throws ParseTimeException, DataException{
-        if (bindingResult.hasErrors()){
 
-            List<UserResponse> errors = new ArrayList<>();
-            for (int i = 0; i < bindingResult.getAllErrors().size() ; i++) {
-                UserResponse userResponse = new UserResponse();
-                userResponse.setMessage(bindingResult.getAllErrors().get(i).getDefaultMessage());
-                errors.add(i,userResponse);
-            }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
-        }
-
-        userService.createUser(UserBinder.bindUserContractModel(userContractRequest));
-        List<UserResponse> successList = new ArrayList<>();
-        UserResponse userResponse = new UserResponse();
-        userResponse.setMessage("User Registered!");
-        successList.add(userResponse);
-        return ResponseEntity.status(HttpStatus.OK).body(successList);
+    @RequestMapping("health")
+    public String returnHealth(){
+        return "Up!";
     }
 
     @RequestMapping(
@@ -69,45 +37,31 @@ public class UserController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<User> listUsers(){
+    public List<User> listUsers() {
         return userService.getAllUsers();
     }
 
 
-    @RequestMapping(
-            value = "login",
-            method = RequestMethod.POST)
-    public String login(@RequestBody User login) throws ServletException {
+    @PostMapping("api/createUser")
+    public ResponseEntity<?> createUser(@RequestBody User user){
 
-        String jwtToken = "";
+        userService.createUser(user);
 
-        if (login.getEmail() == null || login.getPassword() == null) {
-            throw new ServletException("Please fill in username and password");
+        if (user != null){
+            return new ResponseEntity("User Created!", new HttpHeaders(), HttpStatus.OK);
         }
-
-        String email = login.getEmail();
-        String password = login.getPassword();
-
-        User user = userService.findByEmail(email);
-
-        if (user == null) {
-            throw new ServletException("User email not found.");
-        }
-
-        String pwd = user.getPassword();
-
-        if (!password.equals(pwd)) {
-            throw new ServletException("Invalid login. Please check your name and password.");
-        }
-
-        jwtToken = Jwts.builder().setSubject(email).claim("roles", "user").setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
-
-        return jwtToken;
+        return new ResponseEntity("Could not register User", new HttpHeaders(),HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping("home")
-    public String sendHomePage(){
-        return "Home Page!";
+    @PostMapping("/api/login")
+    public ResponseEntity<?> login(@RequestBody User login) {
+
+        logger.debug("login : {}", login);
+
+        //validate login here!
+
+        return new ResponseEntity("Successfully login", new HttpHeaders(), HttpStatus.OK);
+
     }
+
 }

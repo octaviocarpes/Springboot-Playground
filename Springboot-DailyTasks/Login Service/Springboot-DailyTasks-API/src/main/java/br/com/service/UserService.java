@@ -18,11 +18,9 @@ public class UserService {
         return userDAO.getAllUsers();
     }
 
-    public void createUser(User user){
-         userDAO.insertUser(user);
+    public void createUser(User user) {
+        userDAO.insertUser(user);
     }
 
-    public User findByEmail(String email) {
-        return userDAO.findByEmail(email);
-    }
+
 }
