@@ -4,13 +4,9 @@ package SpringbootBlogAPI.SpringbootBlogAPI.controller;
 import SpringbootBlogAPI.SpringbootBlogAPI.db.BlogDatabase;
 import SpringbootBlogAPI.SpringbootBlogAPI.pojo.Blog;
 import SpringbootBlogAPI.SpringbootBlogAPI.service.BlogService;
-import com.google.gson.Gson;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
