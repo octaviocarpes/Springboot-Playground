@@ -33,3 +33,14 @@ dependencies {
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Jar File',
+				'Implementation-Version': version,
+				'Main-Class': 'SpringbootBlogAPI.SpringbootBlogAPI.SpringbootBlogApiApplication'
+	}
+	baseName = project.name + '-all'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
