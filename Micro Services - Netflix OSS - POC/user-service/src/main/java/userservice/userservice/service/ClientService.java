@@ -19,8 +19,13 @@ public class ClientService {
         return repository.findClientByEmail(email);
     }
 
-    public Client create(String name, String email){
-        return new Client();
+    public Client create(String name, String email, String username){
+        Client client = new Client();
+        client.setEmail(email);
+        client.setName(name);
+        client.setUsername(username);
+        repository.save(client);
+        return client;
     }
 
 

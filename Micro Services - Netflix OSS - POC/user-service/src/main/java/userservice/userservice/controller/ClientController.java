@@ -25,13 +25,10 @@ public class ClientController {
         return ResponseEntity.ok(service.getClientById(id));
     }
 
-
-    //TODO: Finish DTO implementation
-    //TODO: Make Builder Creational Pattern
     @PostMapping()
     public ResponseEntity<CreateClientResponseDTO> registerUser(@RequestBody CreateClientRequestDTO dto){
-        Client client = service.create(dto.getName(), dto.getEmail());
-        CreateClientResponseDTO response = new CreateClientResponseDTO(client.getId(), client.getName());
+        Client client = service.create(dto.getName(), dto.getEmail(), dto.getUsername());
+        CreateClientResponseDTO response = new CreateClientResponseDTO(client.getName(), client.getEmail(), client.getUsername());
         return ResponseEntity.ok(response);
     }
 }
