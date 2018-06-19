@@ -3,12 +3,7 @@ package productservice.productservice.dto;
 public class CreateProductRequestDTO {
 
     private String name;
-    private double price;
-
-    public CreateProductRequestDTO(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
+    private Double price;
 
     public String getName() {
         return name;
@@ -16,5 +11,13 @@ public class CreateProductRequestDTO {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

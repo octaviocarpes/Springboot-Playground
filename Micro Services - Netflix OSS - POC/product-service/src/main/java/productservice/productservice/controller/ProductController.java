@@ -14,6 +14,7 @@ import productservice.productservice.service.ProductService;
 @RestController
 public class ProductController {
 
+    @Autowired
     ProductService service;
 
     @GetMapping(value = "/product/id")

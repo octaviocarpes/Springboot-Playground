@@ -1,11 +1,10 @@
 package productservice.productservice.dto;
 
 public class CreateProductResponseDTO {
-
     private String name;
-    private double price;
+    private Double price;
 
-    public CreateProductResponseDTO(String name, double price) {
+    public CreateProductResponseDTO(String name, Double price) {
         this.name = name;
         this.price = price;
     }
@@ -16,5 +15,13 @@ public class CreateProductResponseDTO {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

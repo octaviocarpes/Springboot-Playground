@@ -6,11 +6,8 @@ import org.springframework.stereotype.Service;
 import productservice.productservice.pojo.Product;
 import productservice.productservice.repository.ProductRepository;
 
-
+@Service
 public class ProductService {
-
-    public ProductService() {
-    }
 
     @Autowired
     ProductRepository repository;

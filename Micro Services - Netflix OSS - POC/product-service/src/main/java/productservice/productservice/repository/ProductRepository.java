@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 import productservice.productservice.pojo.Product;
 
 @Repository
-public interface ProductRepository extends MongoRepository<Product,String>{
-
+public interface ProductRepository extends MongoRepository<Product,String> {
     public Product findById(int id);
-
 }
