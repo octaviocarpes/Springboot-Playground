@@ -1,9 +1,10 @@
-package userservice.userservice.domain;
+package salesservice.salesservice.pojo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="Client")
+
+@Document(collection = "Client")
 public class Client {
 
     @Id

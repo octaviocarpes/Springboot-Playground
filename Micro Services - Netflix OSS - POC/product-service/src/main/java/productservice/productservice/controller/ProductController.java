@@ -11,15 +11,27 @@ import productservice.productservice.dto.CreateProductResponseDTO;
 import productservice.productservice.pojo.Product;
 import productservice.productservice.service.ProductService;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
     @Autowired
     ProductService service;
 
+    @GetMapping(value = "/health")
+    public String getHealth(){
+        return "Alive";
+    }
+
     @GetMapping(value = "/product/id")
     public ResponseEntity<Product> getProductbyId(@RequestBody int id){
        return ResponseEntity.ok(service.getProductById(id));
+    }
+
+    @GetMapping(value = "/product/all")
+    public ResponseEntity<List> getAllProducts(){
+        return ResponseEntity.ok(service.getAllProducts());
     }
 
     @PostMapping(value = "/product/register")
