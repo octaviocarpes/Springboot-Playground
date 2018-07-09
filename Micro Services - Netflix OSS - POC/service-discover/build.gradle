@@ -16,17 +16,25 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-bootJar {
-	baseName = 'eureka-service'
-	version = '0.0.1-SNAPSHOT'
-}
+group = 'com.example.docker.spring'
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Jar File Example',
+				'Implementation-Version': version,
+				'Main-Class': 'servicediscover.Main'
+	}
+	baseName = project.name + '-all'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
 
 repositories {
 	mavenCentral()
 }
-
 
 dependencyManagement {
 	imports {

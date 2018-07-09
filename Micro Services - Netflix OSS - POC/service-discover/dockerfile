@@ -1,0 +1,7 @@
+FROM openjdk:8-jdk-alpine
+
+WORKDIR /app
+
+ADD build/libs/ /app
+
+CMD ["java", "-jar", "/app/service-discover-0.0.1-SNAPSHOT.jar"]
