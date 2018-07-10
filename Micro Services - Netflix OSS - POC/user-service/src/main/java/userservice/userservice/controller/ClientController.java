@@ -8,7 +8,7 @@ import userservice.userservice.dto.CreateClientRequestDTO;
 import userservice.userservice.dto.CreateClientResponseDTO;
 import userservice.userservice.service.ClientService;
 
-@RestController(value="users")
+@RestController
 public class ClientController {
 
     @Autowired
@@ -20,17 +20,17 @@ public class ClientController {
     }
 
 
-    @GetMapping("/users/email/")
+    @GetMapping("/email")
     public ResponseEntity<Client> getUserByEmail(@RequestParam(name = "email") String email){
         return ResponseEntity.ok(service.getClientByEmail(email));
     }
 
-    @GetMapping("/users/id/")
+    @GetMapping("/id")
     public ResponseEntity<Client> getUserById(@RequestParam(name = "id") String id){
         return ResponseEntity.ok(service.getClientById(id));
     }
 
-    @PostMapping("/users/register/")
+    @PostMapping("/register")
     public ResponseEntity<CreateClientResponseDTO> registerUser(@RequestBody CreateClientRequestDTO dto){
         Client client = service.create(dto.getName(), dto.getEmail(), dto.getUsername());
         CreateClientResponseDTO response = new CreateClientResponseDTO(client.getName(), client.getEmail(), client.getUsername());
