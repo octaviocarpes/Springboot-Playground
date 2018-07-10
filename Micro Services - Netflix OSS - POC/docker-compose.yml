@@ -1,0 +1,36 @@
+ 
+version: "2"
+services:
+  mongo-db:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+
+  discovery:
+    build: ./service-discover/
+    hostname: discovery
+    ports:
+      - "8761:8761"
+    environment:
+      hostname: discovery
+
+  gateway:
+    build: ./api-gateway/
+    ports:
+      - "8080:8080"
+    environment:
+      DISCOVERY_URL: http://discovery:8761/eureka
+    depends_on:
+      - discovery
+      - user-service
+
+  user-service:
+    build: ./user-service/
+    ports:
+      - "3333:3333"
+    environment:
+      DB_HOST: mongo-db
+      DISCOVERY_URL: http://discovery:8761/
+    depends_on:
+      - mongo-db

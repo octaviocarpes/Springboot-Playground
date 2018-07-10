@@ -10,3 +10,12 @@ eureka:
 ribbon:
   eureka:
     enabled: true
+
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      database: clients
+      host: ${DB_HOST:localhost}
+      port: ${DB_PORT:27017}
